@@ -1,37 +1,27 @@
-## Welcome to GitHub Pages
+# Using MusicKit to Integrate with Apple Music (Workings verison)
+  
+## it works on my iPhone iOS15 2021/10/9
+  
+Find an album in Apple Music that corresponds to a CD in a user's collection, and present the information associated with the album.
 
-You can use the [editor on GitHub](https://github.com/fengyiqicoder/MusicKit-WWDC-Demo/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+## Overview
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+- Note: This sample code project is associated with WWDC21 session [10294: Meet MusicKit for Swift](https://developer.apple.com/wwdc21/10294/).
 
-### Markdown
+## Configure the Sample Code Project
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+This sample code project must be run on a physical device.
 
-```markdown
-Syntax highlighted code block
+Before you run the sample code project in Xcode:
 
-# Header 1
-## Header 2
-### Header 3
+1. In the project navigator, select the project and go to the Signing & Capabilities tab.
+2. Select your own developer team from the Team popup menu.
+3. Choose a new bundle identifier for the `MusicAlbums` target, and enter it in the Bundle Identifier field. The bundle identifier within the project has an associated App ID, so you need a unique identifier to create your own App ID. Use a reverse-DNS format for your identifier, as described in [Preparing Your App For Distribution](https://developer.apple.com/documentation/xcode/preparing-your-app-for-distribution).
+4. In Safari, visit the [Certificates, Identifiers, and Profiles](https://developer.apple.com/account/resources) section of the developer web site.
+5. Select Identifiers and click the "+" button to create a new App ID for `MusicAlbums`. Follow the steps until you reach the "Register an App ID" page.
+6. For the Bundle ID, select "explicit", and enter the bundle identifier you chose in step 2.
+7. Select the App Services tab, and check the box next to MusicKit. There is no need to add any capabilities from the Capabilities tab.
+8. Complete the App ID creation process.
 
-- Bulleted
-- List
+Once your App ID is created, your Xcode project needs no additional configuration. The MusicKit App Service is a run-time service that is automatically associated with your app's bundle ID.
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/fengyiqicoder/MusicKit-WWDC-Demo/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
