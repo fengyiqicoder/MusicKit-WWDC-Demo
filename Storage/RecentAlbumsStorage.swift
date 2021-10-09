@@ -5,9 +5,9 @@ Abstract:
 Persistent information about recently viewed albums.
 */
 
+import MusicKit
 import Combine
 import Foundation
-import MusicKit
 
 /// `RecentAlbumsStorage` allows storing persistent information about recently viewed albums.
 /// It also offers a convenient way to observe those recently viewed albums.

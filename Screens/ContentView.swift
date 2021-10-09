@@ -60,7 +60,7 @@ struct ContentView: View {
             navigationViewContents
                 .navigationTitle("Music Albums")
         }
-        .searchable("Albums", text: $searchTerm)
+        .searchable(text: $searchTerm)
         .gesture(hiddenDevelopmentSettingsGesture)
     }
     

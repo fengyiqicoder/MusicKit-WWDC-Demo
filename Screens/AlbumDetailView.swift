@@ -6,6 +6,7 @@ Detailed information about an album.
 */
 
 import MusicKit
+import MediaPlayer
 import SwiftUI
 
 /// `AlbumDetailView` is a view that presents detailed information about a specific `Album`.
@@ -65,11 +66,9 @@ struct AlbumDetailView: View {
         }
         
         // Start observing changes to playback status.
-        .task {
-            for await playbackStatus in player.updates(for: \.playbackStatus) {
-                isPlaying = (playbackStatus == .playing)
-            }
-        }
+//        .task {
+//            isPlaying = (player.playbackState == .playing)
+//        }
         
         // Start observing changes to music subscription.
         .task {
@@ -116,13 +115,13 @@ struct AlbumDetailView: View {
     // MARK: - Playback
     
     /// The MusicKit player used for Apple Music playback.
-    private let player = ApplicationMusicPlayer.shared
+    private let player = MPMusicPlayerController.systemMusicPlayer
     
     /// `true` when a playback queue has been set on the player.
     @State var isPlaybackQueueSet = false
     
     /// `true` when the player is playing.
-    @State var isPlaying = false
+//    @State var isPlaying = false
     
     /// The Apple Music subscription of the current user.
     @State var musicSubscription: MusicSubscription?
@@ -144,14 +143,14 @@ struct AlbumDetailView: View {
         HStack {
             Button(action: handlePlayButtonSelected) {
                 HStack {
-                    Image(systemName: (isPlaying ? "pause.fill" : "play.fill"))
-                    Text((isPlaying ? "Pause" : "Play"))
+                    Image(systemName: "play.fill")
+                    Text("Play")
                 }
                 .frame(maxWidth: 200)
             }
             .buttonStyle(ProminentButtonStyle())
             .disabled(isPlayButtonDisabled)
-            .animation(.easeInOut(duration: 0.1), value: isPlaying)
+//            .animation(.easeInOut(duration: 0.1), value: isPlaying)
             
             if shouldOfferSubscription {
                 subscriptionOfferButton
@@ -161,20 +160,26 @@ struct AlbumDetailView: View {
     
     /// The action to perform when the Play/Pause button is tapped.
     private func handlePlayButtonSelected() {
-        if !isPlaying {
-            if !isPlaybackQueueSet {
-                player.setQueue(with: album)
-                isPlaybackQueueSet = true
-            }
-            player.play()
-        } else {
-            player.pause()
-        }
+        //        if !isPlaying {
+        //            if !isPlaybackQueueSet {
+        player.setQueue(with: [album.id.rawValue])
+        player.play()
+        //                isPlaybackQueueSet = true
+        //            }
+        //            player.play()
+        //        } else {
+        //            player.pause()
+        //        }
     }
     
     /// The action to perform when a track item in a list is tapped.
     private func handleTrackSelected(_ track: Track, loadedTracks: MusicItemCollection<Track>) {
-        player.setQueue(with: loadedTracks, startingAt: track)
+        var tracksIDs = loadedTracks.map{ $0.id.rawValue }
+        if let firstIndex = tracksIDs.firstIndex(of: track.id.rawValue) {
+            let startTrack = tracksIDs.remove(at: firstIndex)
+            tracksIDs.insert(startTrack, at: 0)
+        }
+        player.setQueue(with: tracksIDs)
         isPlaybackQueueSet = true
         player.play()
     }
